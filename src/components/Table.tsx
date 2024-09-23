@@ -3,6 +3,12 @@ import React from 'react'
 import { todo } from '../../types'
 import TaskTodo from "@/components/Todo"
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'; 
+
+
+const cookieStore = cookies();
+const token = cookieStore.get('access_token')?.value;
+// console.log(token)
 
 const Table =async () => {
   async function fetchData() {
@@ -10,26 +16,24 @@ const Table =async () => {
       const response = await fetch('http://localhost:8000/todos', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         cache:'no-store'
       });
       revalidatePath('/todos')
-      const data = await response.json();  // Wait for the JSON data to be parsed
-      return data;  // Now you can return the data and store it in a variable
+      const data = response.json()
+      // console.log(data)
+      return data
     } catch (error) {
       console.error('Error:', error);
     }
   }
   const response = await fetchData()
+  // console.log(`This is the resposne from todos : ${response}`)
+  
   const data = response.sort((a:any,b:any)=>a.id - b.id)
-  console.log(data)
-  //  const data = await fetch('http://localhost:8000/todos')
-  //  const todo_list = await data.json()
-  //  const dummy=await fetch('http://localhost:8000/todos')
-  //  const res = await dummy.json()
-  //  console.log(res)
-  //  console.log('All todos = ',todo_list)
+ 
+  // console.log('All Todos : '+ response)
   return (
     <table className='w-full mt-2'>
       <thead className='w-full'>
@@ -44,10 +48,11 @@ const Table =async () => {
             <TaskTodo task={todo} key = {todo.id}></TaskTodo>
             ))
         }
+       
         
       </tbody>
     </table>
   )
 }
-
 export default Table
+

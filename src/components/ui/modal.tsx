@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import AddTask from '@/components/AddTask'
 import EditTask from '@/components/EditTask'
 
-export default  function modal ({children , title , add , edit ,task}:{children:React.ReactNode , title:string , add:boolean , edit:boolean , task:any}) {
+export default  function modal ({children , title , add , edit ,task}:{children:React.ReactNode , title:string , add:boolean , edit:boolean , task?:any}) {
   return (
     <Dialog>
       <DialogTrigger asChild>

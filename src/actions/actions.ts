@@ -1,15 +1,21 @@
 'use server'
 import { revalidatePath } from "next/cache";
+import { cookies } from 'next/headers';
+const cookieStore = cookies();
+const token = cookieStore.get('access_token')?.value;
+const ref_token = cookieStore.get('refresh_token')?.value;
+console.log(token)
 export async function addTodo(state :{status:string , message : string},formData : FormData){
     const todo_content = formData.get('add_todo') as string;
-    console.log('form data = ',formData)
-    console.log('todo - content',todo_content)
+    // console.log('form data = ',formData)
+    // console.log('todo - content',todo_content)
     
     try{
         const response = await fetch('http://localhost:8000/todos',{
             method:'POST',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body:JSON.stringify({content:todo_content})
         })
@@ -39,7 +45,8 @@ export async function edit_todo(state :{status:string , message : string},{id,co
         const response = await fetch(`http://localhost:8000/todos/${id}`,{
             method:'PUT',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body:JSON.stringify({id:id , content : content , is_completed : is_completed})
         })
@@ -67,7 +74,8 @@ export async function del_todo(id:number,content:string,is_completed:boolean){
         const response = await fetch(`http://localhost:8000/todos/${id}`,{
             method:'DELETE',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body:JSON.stringify({ content : content , is_completed : ! is_completed})
         })
@@ -88,7 +96,7 @@ export async function del_todo(id:number,content:string,is_completed:boolean){
 }
 
 
-// Delete todo Funcitonality
+// Change Status Funcitonality
 export async function change_status(id:number,content:string,is_completed:boolean){
    
     
@@ -96,7 +104,8 @@ export async function change_status(id:number,content:string,is_completed:boolea
         const response = await fetch(`http://localhost:8000/todos/${id}`,{
             method:'PUT',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body:JSON.stringify({ content : content , is_completed : ! is_completed})
         })
