@@ -7,7 +7,7 @@ import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import Submitbtn from '@/components/Submitbtn'
 
-const addTask = () => {
+const AddTask = () => {
 
   
   const [state , formAction] = useFormState(addTodo , {status :" " , message :" "})
@@ -31,4 +31,4 @@ const addTask = () => {
   )
 }
 
-export default addTask
+export default AddTask

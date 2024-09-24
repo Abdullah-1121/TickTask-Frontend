@@ -7,7 +7,7 @@ import Submitbtn from '@/components/Submitbtn'
 import toast from 'react-hot-toast'
 
 
-const editTask = ({todo}:{todo:any}) => {
+const EditTask = ({todo}:{todo:any}) => {
   const [state , formAction] = useFormState(edit_todo , {status :" " , message :" "})
   const {status , message}= state;
   const handleSubmit = (formData:FormData)=>{
@@ -34,4 +34,4 @@ const editTask = ({todo}:{todo:any}) => {
   )
 }
 
-export default editTask
+export default EditTask

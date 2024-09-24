@@ -27,7 +27,7 @@ export default async function  Home() {
        <div className="Todo-heading w-full flex flex-col justify-center px-16  mt-4 mb-8">
         {/* Main Section with Heading and Add Task Button */}
         <h1 className="text-4xl font-bold text-green-600">TICK TASK <span className="text-2xl text-gray-600 font-light">Your Daily Tasks Planner</span> </h1>
-        <p className="text-sm text-gray-600">" Do what is supposed to be done. "</p>
+        <p className="text-sm text-gray-600">Do what is supposed to be done. </p>
        </div>
        <div className="Add-Task-Button  w-full px-16 ">
          <Modal title='Add A New Task' edit={false} add={true} >

@@ -87,7 +87,7 @@ window.location.href= '/'
           <button type="submit" className="submit-button w-[80%] p-2 mt-4 rounded-lg text-white font-bold bg-green-500">
             Submit
           </button></div>
-          <div className="m-2 p-2  text-sm"><p>Don't have an Account ? <Link href={'/sign-up'}><span className="underline text-green-500 font-semibold">Sign up</span></Link></p></div>
+          <div className="m-2 p-2  text-sm"><p>Dont have an Account ? <Link href={'/sign-up'}><span className="underline text-green-500 font-semibold">Sign up</span></Link></p></div>
         </div>
       </form>
   );
