@@ -20,7 +20,7 @@ export async function addTodo(state :{status:string , message : string},formData
             body:JSON.stringify({content:todo_content})
         })
         if(response.ok){
-            revalidatePath('/todos')
+            revalidatePath('/')
             return {status : 'success' , message : 'Todo Added Successfully'}
 
         }else{
@@ -51,7 +51,7 @@ export async function edit_todo(state :{status:string , message : string},{id,co
             body:JSON.stringify({id:id , content : content , is_completed : is_completed})
         })
         if(response.ok){
-            revalidatePath('/todos')
+            revalidatePath('/')
             return {status : 'success' , message : 'Todo Edited Successfully'}
 
         }else{

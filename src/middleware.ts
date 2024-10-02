@@ -3,10 +3,13 @@ import { jwtVerify } from 'jose';
 
 const verifyToken = async (token: string) => {
   try {
+    console.log(`secret key : ${process.env.SECRET_KEY}`)
     const secretKey = new TextEncoder().encode(process.env.SECRET_KEY);
     const { payload } = await jwtVerify(token, secretKey);
+    console.log(`payload : ${payload}`)
     return payload;  // Return decoded payload if valid
   } catch (error: any) {
+    console.log(`Error verifying token: ${error.message}`);
     throw new Error('Invalid or expired token');  // Throw error if token is invalid or expired
   }
 };
@@ -15,6 +18,7 @@ export async function middleware(req: NextRequest) {
   // Get access and refresh tokens from cookies
   const accessTokenCookie = req.cookies.get('access_token');
   const refreshTokenCookie = req.cookies.get('refresh_token');
+  
 
   if (!accessTokenCookie || !refreshTokenCookie) {
     // Redirect to sign-in if either token is missing
@@ -29,6 +33,7 @@ export async function middleware(req: NextRequest) {
     await verifyToken(accessToken);
     return NextResponse.next();  // Proceed to the requested page if access token is valid
   } catch (error) {
+    console.log('Access token verification failed:', error);
     console.log('Access token expired, trying to refresh token');
 
     try {
